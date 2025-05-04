@@ -96,11 +96,11 @@ _(Token based)_
       You can add biometrics into your multi-factor authentication process.
       Biometric authentication technologies are used by consumers, governments and private corporations including airports, military bases, and national borders. The technology is increasingly adopted due to           the ability to achieve a high level of security without creating friction for the user. Common biometric authentication methods include:
 
-      Facial recognition—matches the different face characteristics of an individual trying to gain access to an approved face stored in a database. Face recognition can be inconsistent when comparing faces at         different angles or comparing people who look similar, like close relatives. Facial liveness like ID R&D’s passive facial liveness prevents spoofing.
-      Fingerprint scanners—match the unique patterns on an individual’s fingerprints. Some new versions of fingerprint scanners can even assess the vascular patterns in people’s fingers. Fingerprint scanners         are currently the most popular biometric technology for everyday consumers, despite their frequent inaccuracies. This popularity can be attributed to iPhones.
-      Speaker Recognition —also known as voice biometrics, examines a speaker’s speech patterns for the formation of specific shapes and sound qualities. A voice-protected device usually relies on standardized       words to identify users, just like a password.
+      Facial recognition—matches the different face characteristics of an individual trying to gain access to an approved face stored in a database. Face recognition can be inconsistent when comparing faces at         different angles or comparing people who look similar, like close relatives.
+      Fingerprint scanners
+      Speaker Recognition
       Eye scanners—include technologies like iris recognition and retina scanners. Iris scanners project a bright light towards the eye and search for unique patterns in the colored ring around the pupil of the       eye. The patterns are then compared to approved information stored in a database. Eye-based authentication may suffer inaccuracies if a person wears glasses or contact lenses.
-      Talk to ID R&D today about adding biometrics to your authentication strategy >
+     
 5. Token-based authentication
 
    - Token-based authentication technologies enable users to enter their credentials once and receive a unique encrypted string of random characters in exchange. You can then use the token to access protected         systems instead of entering your credentials all over again. The digital token proves that you already have access permission. Use cases of token-based authentication include RESTful APIs that are used by       multiple frameworks and clients.
