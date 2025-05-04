@@ -72,16 +72,16 @@ _(Token based)_
 # 5 User Authentication Methods
 1. Password-based authentication
 
--  - Passwords are the most common methods of authentication. Passwords can be in the form of a string of letters, numbers, or special characters. To protect yourself you need to create strong passwords that       
+   - Passwords are the most common methods of authentication. Passwords can be in the form of a string of letters, numbers, or special characters. To protect yourself you need to create strong passwords that       
       include a combination of all possible options. 
 
 2. Multi-factor authentication
 
--  - requires two or more independent ways to identify a user. Examples include codes generated from the user’s smartphone, Captcha tests, fingerprints, voice biometrics or facial recognition. 
+   - requires two or more independent ways to identify a user. Examples include codes generated from the user’s smartphone, Captcha tests, fingerprints, voice biometrics or facial recognition. 
 
 3. Certificate-based authentication
 
--  -  Certificate-based authentication technologies identify users, machines or devices by using digital certificates. A digital certificate is an electronic document based on the idea of a driver’s license or         a passport. 
+   -  Certificate-based authentication technologies identify users, machines or devices by using digital certificates. A digital certificate is an electronic document based on the idea of a driver’s license or         a passport. 
 
       The certificate contains the digital identity of a user including a public key, and the digital signature of a certification authority. Digital certificates prove the ownership of a public key and issued         only by a certification authority. 
 
@@ -89,7 +89,7 @@ _(Token based)_
 
 4. Biometric authentication
 
--  - Biometrics authentication is a security process that relies on the unique biological characteristics of an individual. Here are key advantages of using biometric authentication technologies:
+   - Biometrics authentication is a security process that relies on the unique biological characteristics of an individual. Here are key advantages of using biometric authentication technologies:
 
       Biological characteristics can be easily compared to authorized features saved in a database. 
       Biometric authentication can control physical access when installed on gates and doors. 
@@ -103,5 +103,5 @@ _(Token based)_
       Talk to ID R&D today about adding biometrics to your authentication strategy >
 5. Token-based authentication
 
--  - Token-based authentication technologies enable users to enter their credentials once and receive a unique encrypted string of random characters in exchange. You can then use the token to access protected         systems instead of entering your credentials all over again. The digital token proves that you already have access permission. Use cases of token-based authentication include RESTful APIs that are used by       multiple frameworks and clients.
+   - Token-based authentication technologies enable users to enter their credentials once and receive a unique encrypted string of random characters in exchange. You can then use the token to access protected         systems instead of entering your credentials all over again. The digital token proves that you already have access permission. Use cases of token-based authentication include RESTful APIs that are used by       multiple frameworks and clients.
 
