@@ -72,11 +72,12 @@ _(Token based)_
 # 5 User Authentication Methods
 1. Password-based authentication
 
-Passwords are the most common methods of authentication. Passwords can be in the form of a string of letters, numbers, or special characters. To protect yourself you need to create strong passwords that include a combination of all possible options. 
+- Passwords are the most common methods of authentication. Passwords can be in the form of a string of letters, numbers, or special characters. To protect yourself you need to create strong passwords that       
+  include a combination of all possible options. 
 
 2. Multi-factor authentication
 
-requires two or more independent ways to identify a user. Examples include codes generated from the user’s smartphone, Captcha tests, fingerprints, voice biometrics or facial recognition. 
+- requires two or more independent ways to identify a user. Examples include codes generated from the user’s smartphone, Captcha tests, fingerprints, voice biometrics or facial recognition. 
 
 3. Certificate-based authentication
 
