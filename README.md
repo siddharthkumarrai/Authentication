@@ -72,36 +72,36 @@ _(Token based)_
 # 5 User Authentication Methods
 1. Password-based authentication
 
-- Passwords are the most common methods of authentication. Passwords can be in the form of a string of letters, numbers, or special characters. To protect yourself you need to create strong passwords that       
-  include a combination of all possible options. 
+-  - Passwords are the most common methods of authentication. Passwords can be in the form of a string of letters, numbers, or special characters. To protect yourself you need to create strong passwords that       
+      include a combination of all possible options. 
 
 2. Multi-factor authentication
 
-- requires two or more independent ways to identify a user. Examples include codes generated from the user’s smartphone, Captcha tests, fingerprints, voice biometrics or facial recognition. 
+-  - requires two or more independent ways to identify a user. Examples include codes generated from the user’s smartphone, Captcha tests, fingerprints, voice biometrics or facial recognition. 
 
 3. Certificate-based authentication
 
-Certificate-based authentication technologies identify users, machines or devices by using digital certificates. A digital certificate is an electronic document based on the idea of a driver’s license or a passport. 
+-  -  Certificate-based authentication technologies identify users, machines or devices by using digital certificates. A digital certificate is an electronic document based on the idea of a driver’s license or         a passport. 
 
-The certificate contains the digital identity of a user including a public key, and the digital signature of a certification authority. Digital certificates prove the ownership of a public key and issued only by a certification authority. 
+      The certificate contains the digital identity of a user including a public key, and the digital signature of a certification authority. Digital certificates prove the ownership of a public key and issued         only by a certification authority. 
 
-Users provide their digital certificates when they sign in to a server. The server verifies the credibility of the digital signature and the certificate authority. The server then uses cryptography to confirm that the user has a correct private key associated with the certificate.
+      Users provide their digital certificates when they sign in to a server. The server verifies the credibility of the digital signature and the certificate authority. The server then uses cryptography to             confirm that the user has a correct private key associated with the certificate.
 
 4. Biometric authentication
 
-Biometrics authentication is a security process that relies on the unique biological characteristics of an individual. Here are key advantages of using biometric authentication technologies:
+-  - Biometrics authentication is a security process that relies on the unique biological characteristics of an individual. Here are key advantages of using biometric authentication technologies:
 
-Biological characteristics can be easily compared to authorized features saved in a database. 
-Biometric authentication can control physical access when installed on gates and doors. 
-You can add biometrics into your multi-factor authentication process.
-Biometric authentication technologies are used by consumers, governments and private corporations including airports, military bases, and national borders. The technology is increasingly adopted due to the ability to achieve a high level of security without creating friction for the user. Common biometric authentication methods include:
+      Biological characteristics can be easily compared to authorized features saved in a database. 
+      Biometric authentication can control physical access when installed on gates and doors. 
+      You can add biometrics into your multi-factor authentication process.
+      Biometric authentication technologies are used by consumers, governments and private corporations including airports, military bases, and national borders. The technology is increasingly adopted due to           the ability to achieve a high level of security without creating friction for the user. Common biometric authentication methods include:
 
-Facial recognition—matches the different face characteristics of an individual trying to gain access to an approved face stored in a database. Face recognition can be inconsistent when comparing faces at different angles or comparing people who look similar, like close relatives. Facial liveness like ID R&D’s passive facial liveness prevents spoofing.
-Fingerprint scanners—match the unique patterns on an individual’s fingerprints. Some new versions of fingerprint scanners can even assess the vascular patterns in people’s fingers. Fingerprint scanners are currently the most popular biometric technology for everyday consumers, despite their frequent inaccuracies. This popularity can be attributed to iPhones.
-Speaker Recognition —also known as voice biometrics, examines a speaker’s speech patterns for the formation of specific shapes and sound qualities. A voice-protected device usually relies on standardized words to identify users, just like a password.
-Eye scanners—include technologies like iris recognition and retina scanners. Iris scanners project a bright light towards the eye and search for unique patterns in the colored ring around the pupil of the eye. The patterns are then compared to approved information stored in a database. Eye-based authentication may suffer inaccuracies if a person wears glasses or contact lenses.
-Talk to ID R&D today about adding biometrics to your authentication strategy >
+      Facial recognition—matches the different face characteristics of an individual trying to gain access to an approved face stored in a database. Face recognition can be inconsistent when comparing faces at         different angles or comparing people who look similar, like close relatives. Facial liveness like ID R&D’s passive facial liveness prevents spoofing.
+      Fingerprint scanners—match the unique patterns on an individual’s fingerprints. Some new versions of fingerprint scanners can even assess the vascular patterns in people’s fingers. Fingerprint scanners         are currently the most popular biometric technology for everyday consumers, despite their frequent inaccuracies. This popularity can be attributed to iPhones.
+      Speaker Recognition —also known as voice biometrics, examines a speaker’s speech patterns for the formation of specific shapes and sound qualities. A voice-protected device usually relies on standardized       words to identify users, just like a password.
+      Eye scanners—include technologies like iris recognition and retina scanners. Iris scanners project a bright light towards the eye and search for unique patterns in the colored ring around the pupil of the       eye. The patterns are then compared to approved information stored in a database. Eye-based authentication may suffer inaccuracies if a person wears glasses or contact lenses.
+      Talk to ID R&D today about adding biometrics to your authentication strategy >
 5. Token-based authentication
 
-Token-based authentication technologies enable users to enter their credentials once and receive a unique encrypted string of random characters in exchange. You can then use the token to access protected systems instead of entering your credentials all over again. The digital token proves that you already have access permission. Use cases of token-based authentication include RESTful APIs that are used by multiple frameworks and clients.
+-  - Token-based authentication technologies enable users to enter their credentials once and receive a unique encrypted string of random characters in exchange. You can then use the token to access protected         systems instead of entering your credentials all over again. The digital token proves that you already have access permission. Use cases of token-based authentication include RESTful APIs that are used by       multiple frameworks and clients.
 
