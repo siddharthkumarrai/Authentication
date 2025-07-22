@@ -10,23 +10,25 @@ This document outlines a JWT (JSON Web Token) based authentication system with u
 - **Endpoint**: `POST /signup`
 - **Purpose**: Creates new user accounts
 - **Process**: 
-  - Validates user input (name, email, password)
-  - Hashes password for secure storage
-  - Stores user data in database
-  - Returns success confirmation
+  - Validates required fields (name, email, password, confirmPassword)
+  - Validates email format using email-validator library
+  - Uses Mongoose pre-save middleware to hash password with bcrypt (salt rounds: 10)
+  - Handles duplicate email errors (MongoDB error code 11000)
+  - Returns user data without password field
 
 ### 2. User Authentication (Login)
 - **Endpoint**: `POST /signin`
 - **Purpose**: Authenticates existing users
 - **Process**:
-  - Validates credentials against database
-  - Compares hashed passwords using bcrypt
-  - Generates JWT token upon successful authentication
-  - Sets secure HTTP-only cookie with token
+  - Validates email and password presence
+  - Finds user with password field included (`.select('+password')`)
+  - Compares plain password with hashed password using bcrypt.compare()
+  - Generates JWT token using user schema method
+  - Sets HTTP-only cookie with 7-day expiration
 
 ### 3. Protected Routes
-- **User Profile**: `GET /user` - Retrieves authenticated user data
-- **Logout**: `GET /logout` - Invalidates user session
+- **User Profile**: `GET /user` - Retrieves authenticated user data by ID from JWT
+- **Logout**: `POST/GET /logout` - Clears authentication cookie
 
 ## Authentication Flow
 
@@ -109,7 +111,8 @@ Content-Type: application/json
 {
   "name": "John Doe",
   "email": "john@example.com", 
-  "password": "securePassword123"
+  "password": "securePassword123",
+  "confirmPassword": "securePassword123"
 }
 ```
 
@@ -117,7 +120,37 @@ Content-Type: application/json
 ```json
 {
   "success": true,
-  "message": "User successfully created"
+  "message": "user are successfully created",
+  "data": {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "_id": "user_id",
+    "createdAt": "2023-01-01T00:00:00.000Z"
+  }
+}
+```
+
+**Response (Validation Error)**:
+```json
+{
+  "success": false,
+  "message": "all fields are required"
+}
+```
+
+**Response (Invalid Email)**:
+```json
+{
+  "success": false,
+  "message": "plese enter a valid email"
+}
+```
+
+**Response (Duplicate Email)**:
+```json
+{
+  "success": false,
+  "message": "account are already exist"
 }
 ```
 
@@ -136,7 +169,7 @@ Content-Type: application/json
 ```json
 {
   "success": true,
-  "message": "User successfully signed in"
+  "message": "user successfuly signIn"
 }
 ```
 
@@ -144,7 +177,15 @@ Content-Type: application/json
 ```json
 {
   "status": false,
-  "message": "Invalid credentials"
+  "message": "invalid creadential"
+}
+```
+
+**Response (Missing Fields)**:
+```json
+{
+  "success": false,
+  "message": "email and password are required"
 }
 ```
 
@@ -159,10 +200,19 @@ Cookie: token=<jwt_token>
 {
   "success": true,
   "data": {
-    "id": "user_id",
+    "_id": "user_id",
     "name": "John Doe",
-    "email": "john@example.com"
+    "email": "john@example.com",
+    "createdAt": "2023-01-01T00:00:00.000Z"
   }
+}
+```
+
+**Response (User Not Found)**:
+```json
+{
+  "success": false,
+  "message": "user not found"
 }
 ```
 
@@ -175,7 +225,7 @@ GET /logout
 ```json
 {
   "success": true,
-  "message": "User successfully logged out"
+  "message": "user successfully logout"
 }
 ```
 
@@ -200,12 +250,71 @@ flowchart TD
 
 ## Implementation Notes
 
-### Backend Requirements
-- **Node.js** with Express.js framework
-- **JWT library** for token generation and verification
-- **Bcrypt** for password hashing
-- **Database** (MongoDB, PostgreSQL, etc.) for user storage
-- **Cookie-parser** middleware for handling cookies
+## Implementation Details
+
+### Dependencies Used
+```javascript
+import UserModel from "../models/userSchema.js";
+import * as EmailValidator from 'email-validator';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+```
+
+### Password Security Implementation
+```javascript
+// Pre-save middleware in userSchema
+userSchema.pre("save", async function(next){
+    if(!(this.isModified("password"))) return next()
+    try {
+        const hashedPassword = await bcrypt.hash(this.password, 10)
+        this.password = hashedPassword
+    } catch (error) {
+        next(error)
+    }
+    next()
+})
+```
+
+### JWT Token Generation
+```javascript
+// User schema method for JWT token
+userSchema.methods = {
+    jwtToken(){
+        return jwt.sign(
+            {
+                id: this._id,
+                name: this.name,
+                email: this.email,
+            },
+            process.env.SECREATE_KEY,
+            {
+                expiresIn: "24h"
+            }
+        )
+    }
+}
+```
+
+### Cookie Configuration
+```javascript
+// Login - Set cookie with 7-day expiration
+res.cookie("token", token, { 
+    httpOnly: true, 
+    maxAge: 60 * 60 * 24 * 7 // 7 days in seconds
+})
+
+// Logout - Clear cookie by setting null and immediate expiration
+res.cookie("token", null, {
+    httpOnly: true, 
+    expires: new Date()
+})
+```
+
+### Input Validation Features
+- **Required Fields**: Validates all required fields are present
+- **Email Validation**: Uses `email-validator` library for email format validation
+- **Password Confirmation**: Includes confirmPassword field in signup
+- **Duplicate Email Handling**: Catches MongoDB duplicate key error (code 11000)
 
 ### Frontend Considerations
 - Automatic cookie handling by browser
@@ -215,21 +324,61 @@ flowchart TD
 
 ### Environment Variables
 ```env
-JWT_SECRET=your_super_secure_jwt_secret
-JWT_EXPIRES_IN=7d
-DB_CONNECTION_STRING=your_database_url
-BCRYPT_SALT_ROUNDS=12
+SECREATE_KEY=your_super_secure_jwt_secret
+# Note: Your code uses SECREATE_KEY (with typo)
+# Consider using JWT_SECRET for standard naming
 ```
 
-## Best Practices Implemented
+### Backend Requirements
+- **Node.js** with Express.js framework
+- **jsonwebtoken** for JWT token generation and verification
+- **bcryptjs** for password hashing
+- **email-validator** for email format validation
+- **MongoDB with Mongoose** for user data storage
+- **Cookie-parser** middleware for handling cookies
 
-1. **Password Security**: Never store plain text passwords
-2. **Token Storage**: Use HTTP-only cookies instead of localStorage
-3. **Input Validation**: Validate all user inputs on both client and server
-4. **Error Handling**: Consistent error responses without information leakage
-5. **Secure Communication**: HTTPS for all authentication endpoints
-6. **Token Expiration**: Implement reasonable token expiration times
-7. **Logout Mechanism**: Proper session invalidation
+## Code Issues & Improvements
+
+### Current Issues
+1. **Missing await in bcrypt.compare()**: 
+   ```javascript
+   // Current (incorrect)
+   if (!user || !(bcrypt.compare(password,user.password))) 
+   
+   // Should be
+   if (!user || !(await bcrypt.compare(password, user.password)))
+   ```
+
+2. **Password confirmation not validated**: The signup accepts `confirmPassword` but doesn't verify it matches `password`
+
+3. **Inconsistent response format**: Some responses use `status: false` while others use `success: false`
+
+4. **Environment variable typo**: Uses `SECREATE_KEY` instead of `SECRET_KEY`
+
+### Suggested Improvements
+```javascript
+// Add password confirmation validation in signup
+if (password !== confirmPassword) {
+    return res.status(400).json({
+        success: false,
+        message: "passwords do not match"
+    })
+}
+
+// Fix bcrypt compare (add await)
+if (!user || !(await bcrypt.compare(password, user.password))) {
+    return res.status(401).json({
+        success: false,
+        message: "invalid credentials"
+    })
+}
+
+// Standardize error responses
+const errorResponse = (message, statusCode = 400) => ({
+    success: false,
+    message
+});
+```
 
 ## Future Enhancements
 
