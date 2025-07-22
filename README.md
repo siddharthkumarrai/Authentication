@@ -228,26 +228,6 @@ GET /logout
   "message": "user successfully logout"
 }
 ```
-
-## Error Handling
-
-```mermaid
-flowchart TD
-    A[Request Received] --> B{Valid Input?}
-    B -->|No| C[Return 400 Bad Request]
-    B -->|Yes| D{User Exists?}
-    D -->|No| E[Return 404 Not Found]
-    D -->|Yes| F{Valid Credentials?}
-    F -->|No| G[Return 401 Unauthorized]
-    F -->|Yes| H[Generate JWT & Return Success]
-    
-    I[Protected Route Access] --> J{JWT Cookie Present?}
-    J -->|No| K[Return 401 Unauthorized]
-    J -->|Yes| L{Valid JWT Token?}
-    L -->|No| M[Return 403 Forbidden]
-    L -->|Yes| N[Allow Access to Resource]
-```
-
 ## Implementation Notes
 
 ## Implementation Details
@@ -328,63 +308,3 @@ SECREATE_KEY=your_super_secure_jwt_secret
 # Note: Your code uses SECREATE_KEY (with typo)
 # Consider using JWT_SECRET for standard naming
 ```
-
-### Backend Requirements
-- **Node.js** with Express.js framework
-- **jsonwebtoken** for JWT token generation and verification
-- **bcryptjs** for password hashing
-- **email-validator** for email format validation
-- **MongoDB with Mongoose** for user data storage
-- **Cookie-parser** middleware for handling cookies
-
-## Code Issues & Improvements
-
-### Current Issues
-1. **Missing await in bcrypt.compare()**: 
-   ```javascript
-   // Current (incorrect)
-   if (!user || !(bcrypt.compare(password,user.password))) 
-   
-   // Should be
-   if (!user || !(await bcrypt.compare(password, user.password)))
-   ```
-
-2. **Password confirmation not validated**: The signup accepts `confirmPassword` but doesn't verify it matches `password`
-
-3. **Inconsistent response format**: Some responses use `status: false` while others use `success: false`
-
-4. **Environment variable typo**: Uses `SECREATE_KEY` instead of `SECRET_KEY`
-
-### Suggested Improvements
-```javascript
-// Add password confirmation validation in signup
-if (password !== confirmPassword) {
-    return res.status(400).json({
-        success: false,
-        message: "passwords do not match"
-    })
-}
-
-// Fix bcrypt compare (add await)
-if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({
-        success: false,
-        message: "invalid credentials"
-    })
-}
-
-// Standardize error responses
-const errorResponse = (message, statusCode = 400) => ({
-    success: false,
-    message
-});
-```
-
-## Future Enhancements
-
-- **Refresh Tokens**: Implement token refresh mechanism
-- **Rate Limiting**: Add login attempt rate limiting
-- **Email Verification**: Email confirmation for new registrations
-- **Password Reset**: Secure password reset functionality
-- **Multi-Factor Authentication**: Additional security layer
-- **Session Management**: Advanced session handling and monitoring
